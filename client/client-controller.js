@@ -2,14 +2,15 @@
 
 /* Controllers */
 
-var ClientControllers = angular.module('myCRMClients', []);
+angular.module('myCRMClients')
 
 
+.controller('ClientListCtrl',  ['$scope','$http','$timeout', '$templateCache', 'ClientService', 
+                                function($scope, $http,$timeout, $templateCache, ClientService) {
+    
 
-ClientControllers.controller('ClientListCtrl',  ["$scope","$http","$timeout", "$templateCache", function($scope, $http,$timeout, $templateCache) {
-  var method = 'POST';
-  var inserturl = SERVER_URL + '/clients';
   $scope.codeStatus = "";
+    
   $scope.save = function() {
     var formData = {
       name : this.name,
@@ -26,13 +27,13 @@ ClientControllers.controller('ClientListCtrl',  ["$scope","$http","$timeout", "$
 	
 	console.log(formData);
 	//var jdata = JSON.stringify(formData);
-	console.log(JSON.stringify(formData));
+	//console.log(JSON.stringify(formData));
       
-    var res = $http.post(inserturl, formData);
+    var res = ClientService.create(formData);
 		res.success(function(data, status, headers, config) {
-			console.log("success");
+			//console.log("success");
             $scope.codeStatus = data;
-		    console.log($scope.codeStatus);
+		    
             $scope.list(); //update list
 		});
 		res.error(function(data, status, headers, config) {
@@ -45,22 +46,25 @@ ClientControllers.controller('ClientListCtrl',  ["$scope","$http","$timeout", "$
 
   
   $scope.list = function() {
-	  var url = SERVER_URL + '/clients';
-      $http.get(url).success(function(data) {
-		$scope.clients = data;
-        console.log("Client list retrieved from" + url);
-	  });
+      console.log("sending request with " + $http.defaults.headers.common['Authorization']);
+      
+      
+      ClientService.findAll().success(function(data) {
+          $scope.clients = data;
+        //console.log("Client list through new method retrieved from" + url);
+      }).error(function(data, status) {
+            console.log(status);
+            console.log(data);
+        });
+                                     
+          
+    
   };
   $scope.list();
   ;
 }]);
 
 
-ClientControllers.directive('myCustomer', function() {
-  return {
-    templateUrl: 'my-customer.html'
-  };
 
-});
 
 

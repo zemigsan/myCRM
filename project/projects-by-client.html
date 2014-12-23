@@ -1,0 +1,61 @@
+
+<div class="page-header">
+  <h1>Client: <small>{{ client.name }}</small></h1>
+</div>
+    
+    <div class="panel panel-info">
+  <!-- Default panel contents 
+  <div class="panel-heading">Projects</div>
+  <!--<div class="panel-body">
+    <p>Here are the projects with this client</p>
+  </div>-->
+<form class="form-search">
+  <input type="text" class="input-medium search-query"  ng-model="search.name">
+  <button type="submit" class="btn">Search</button>
+</form>
+  <!-- Table -->
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Project name</th>
+      <th>Description</th>
+      <th>Date started</th>
+      <th>Date finished</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+     <tr ng-repeat="project in projects | filter: search">
+      <td><a href="#/{{$index}}">{{ project.name }}</a></td>
+        <td>{{ project.description }}</td>
+        <td>{{ project.datestarted }}</td>
+        <td>{{ project.datefinished }}</td>
+         <td>{{ project.value }}</td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+
+<form ng-submit="save()">
+  <fieldset>
+    <legend>New Project</legend>
+    <label>Label name</label>
+    <input type="text" placeholder="Name…" ng-model="name">
+      <textarea rows="3" placeholder="Description…" ng-model="description" ></textarea>
+      <div class="input-append date"  data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+        <input class="span2" size="16" ng-model="datestarted" type="text" value="12-02-2012">
+        <span class="add-on"><i class="icon-th"></i></span>
+      </div>
+      
+      <div class="input-append date"  data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+        <input class="span2" size="16" ng-model="datefinished" type="text" value="12-02-2012">
+        <span class="add-on"><i class="icon-th"></i></span>
+      </div>
+      
+      <input type="text" placeholder="Value…" ng-model="value">
+   
+        <button type="submit" class="btn">Add</button>
+  </fieldset>
+</form>
+
+   

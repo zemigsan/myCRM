@@ -3,7 +3,7 @@ RM = rm -rf
 CP = cp -R 
 PROD_DIR = myCRM
 OUT_DIR = /cygdrive/c/xampp/htdocs/myCRM
-SRC = js css client index.html app.js 
+SRC = css project client components index.html app.js 
 
 
 PROD_FILES= environments/prod/globals.js
